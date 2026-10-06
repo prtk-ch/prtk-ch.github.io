@@ -25,11 +25,8 @@
   --ease-out:cubic-bezier(0.23,1,0.32,1);
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root{
-  --bg:#0e0e0d; --fg:#e8e6e1; --mute:#9c988f; --faint:#605d57;
-  --line:#232220; --signal:#d9a341;
-  color-scheme:dark;
-}}
+/* Light only, deliberately. color-scheme:light above also keeps form controls
+   and scrollbars light on a dark OS, so nothing inverts. */
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
