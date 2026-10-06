@@ -1,0 +1,17 @@
+title: Prateek Chaudhary
+tagline: Pune, India. Speech and language.
+languages: हिंदी · मराठी · Kreol Morisien
+description: "Speech-AI and data engineer in Pune. Builds voice systems end to end: data, training, serving."
+email: prateekchaudhary.main@gmail.com
+
+links:
+  - name: GitHub
+    url: https://github.com/Prateek-Main
+  - name: LinkedIn
+    url: https://www.linkedin.com/in/prateek-chaudhary-01203b24a/
+  - name: Resume
+    url: Prateek_Chaudhary_Resume.docx
+
+exclude:
+  - README.md
+  - .claude

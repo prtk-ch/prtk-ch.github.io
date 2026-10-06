@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ site.title }}</title>
+<meta name="description" content="{{ site.description }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<style>
+/* Ledger structure. Emil Kowalski's motion discipline, its own visual identity:
+   Instrument Sans over neutral paper, one ochre signal reserved for figures and
+   ornaments, and interstitials drawn from the subject's own world — a speech
+   waveform, a mel band, a codec token stream.
+   Motion rules (emilkowalski/skill): custom ease-out, under 300ms for UI,
+   transform+opacity only, 40ms stagger, hover gated to fine pointers,
+   reduced-motion keeps opacity and drops every movement. */
+:root{
+  --bg:#fcfcfb; --fg:#1a1917; --mute:#6b6862; --faint:#a8a49c;
+  --line:#eaeae7; --signal:#8a6514;
+  --sans:"Instrument Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --mono:"Spline Sans Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --deva:"Noto Sans Devanagari",var(--sans);
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0e0e0d; --fg:#e8e6e1; --mute:#9c988f; --faint:#605d57;
+  --line:#232220; --signal:#d9a341;
+  color-scheme:dark;
+}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font-family:var(--sans);font-size:15.5px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+main{max-width:620px;margin:0 auto;padding-inline:20px;padding-block:72px 120px}
+
+/* ---- header: more voice than the reference, and it names the languages ---- */
+h1{font-size:27px;font-weight:600;letter-spacing:-.028em;line-height:1.1;margin:0}
+.tag{font-size:15.5px;color:var(--mute);margin:7px 0 0}
+.tag .deva{font-family:var(--deva);font-size:15px}
+nav{display:flex;gap:17px;flex-wrap:wrap;margin:24px 0 0}
+nav a{font-size:14.5px;color:var(--mute);text-decoration:none;border-bottom:0}
+a{color:var(--fg);text-decoration:none;border-bottom:1px solid var(--line)}
+a:hover{border-bottom-color:var(--faint)}
+a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:2px}
+
+.intro{margin:36px 0 0;display:flex;flex-direction:column;gap:1em}
+.intro p{margin:0}
+
+/* ---- sections: a hairline under each head, which the reference avoids ---- */
+section{margin-top:12px}
+h2{
+  font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--faint);
+  letter-spacing:.07em;text-transform:uppercase;
+  margin:0 0 2px;padding-bottom:7px;border-bottom:1px solid var(--line);
+}
+.row{
+  display:grid;grid-template-columns:104px 1fr;gap:2px 20px;
+  padding:11px 0;border-bottom:1px solid var(--line);
+}
+.row:last-child{border-bottom:0}
+.row>div{min-width:0}
+.d{
+  font-family:var(--mono);font-size:12.5px;color:var(--faint);
+  font-variant-numeric:tabular-nums;padding-top:3px;
+}
+/* Figures carry the only colour on the page. Wrap them in ** in the YAML. */
+.row strong,.intro strong{
+  font-family:var(--mono);font-weight:500;font-size:14px;
+  color:var(--signal);font-variant-numeric:tabular-nums;
+}
+code{font-family:var(--mono);font-size:13.5px;color:var(--mute)}
+
+/* ---- decorative interstitials ---- */
+.orn{display:block;width:100%;height:auto;color:var(--signal);margin:30px 0}
+.orn.wave{margin:34px 0 38px;opacity:.9}
+.orn.mel{margin:30px 0 34px;opacity:.78}
+.orn.tok{margin:26px 0 30px;opacity:.8;color:var(--mute)}
+
+footer{margin-top:16px;padding-top:22px;border-top:1px solid var(--line);font-size:15px;color:var(--mute)}
+footer a{color:var(--mute)}
+
+/* ---- motion ---- */
+h1,.tag,nav,.intro p,h2,.row,footer{
+  opacity:0;transform:translateY(8px);
+  animation:rise 300ms var(--ease-out) forwards;
+}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+h1{animation-delay:0ms}
+.tag{animation-delay:40ms}
+nav{animation-delay:80ms}
+.intro p:nth-child(1){animation-delay:120ms}
+.intro p:nth-child(2){animation-delay:160ms}
+.intro p:nth-child(3){animation-delay:200ms}
+section:nth-of-type(1) h2{animation-delay:280ms}
+section:nth-of-type(1) .row:nth-of-type(1){animation-delay:320ms}
+section:nth-of-type(1) .row:nth-of-type(2){animation-delay:360ms}
+section:nth-of-type(1) .row:nth-of-type(3){animation-delay:400ms}
+section:nth-of-type(2) h2{animation-delay:340ms}
+section:nth-of-type(2) .row{animation-delay:380ms}
+section:nth-of-type(3) h2{animation-delay:380ms}
+section:nth-of-type(3) .row{animation-delay:420ms}
+footer{animation-delay:460ms}
+
+/* Ornaments are decorative, so they get a slightly longer settle than UI.
+   scaleY from 0.92, never from 0 — nothing in the real world grows from nothing. */
+.orn{
+  opacity:0;transform:scaleY(.92);transform-origin:center;
+  animation:settle 420ms var(--ease-out) forwards;
+}
+@keyframes settle{to{opacity:.85;transform:scaleY(1)}}
+.orn.wave{animation-delay:240ms}
+.orn.mel{animation-delay:120ms}
+.orn.tok{animation-delay:120ms}
+
+a{transition:border-color 150ms var(--ease-out),color 150ms var(--ease-out)}
+@media (hover:hover) and (pointer:fine){
+  nav a:hover{color:var(--fg)}
+  .row:hover .d{color:var(--signal)}
+}
+.d{transition:color 150ms var(--ease-out)}
+nav a:active{transform:scale(.97);transition:transform 100ms var(--ease-out)}
+
+@media (prefers-reduced-motion:reduce){
+  h1,.tag,nav,.intro p,h2,.row,footer,.orn{
+    animation:fade 200ms ease forwards;transform:none;
+  }
+  @keyframes fade{to{opacity:1}}
+  .orn{animation:fadeorn 200ms ease forwards}
+  @keyframes fadeorn{to{opacity:.8}}
+  nav a:active{transform:none}
+}
+
+@media (max-width:520px){
+  main{padding-block:52px 88px}
+  h1{font-size:24px}
+  .row{grid-template-columns:1fr;gap:1px}
+  .d{padding-top:0}
+  .orn.mel,.orn.wave{margin:26px 0 28px}
+}
+</style>
+</head>
+<body>
+<main>
+
+<h1>{{ site.title }}</h1>
+<p class="tag">{{ site.tagline }} <span class="deva">{{ site.languages }}</span></p>
+
+<nav>
+{%- for l in site.links %}
+<a href="{{ l.url }}">{{ l.name }}</a>
+{%- endfor %}
+</nav>
+
+<div class="intro">
+{{ content }}
+</div>
+
+{% include wave.svg %}
+
+{%- for s in site.data.entries.sections %}
+<section>
+<h2>{{ s.name }}</h2>
+{%- for e in s.items %}
+<div class="row">
+<span class="d">{{ e.d }}</span>
+<div>{{ e.t | markdownify | remove: '<p>' | remove: '</p>' }}</div>
+</div>
+{%- endfor %}
+</section>
+{%- if forloop.index == 1 %}{% include mel.svg %}{% endif %}
+{%- if forloop.index == 2 %}{% include tokens.svg %}{% endif %}
+{%- endfor %}
+
+<footer>
+<a href="mailto:{{ site.email }}">{{ site.email }}</a>
+</footer>
+
+</main>
+</body>
+</html>

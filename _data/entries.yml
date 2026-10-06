@@ -1,0 +1,38 @@
+# Add a line at the top of any section's items. That's the whole workflow.
+#   - d: 2026-10-08
+#     t: What happened.
+#
+# Two conventions:
+#   **bold** -> rendered as a figure in the ochre signal colour, tabular, mono.
+#   `backticks` -> inline code.
+# Keep `t` on one line, and wrap it in quotes if it contains a colon.
+
+sections:
+  - name: Log
+    items:
+      - d: 2026-10-07
+        t: Traced the missed morning start to a stray process holding **95 GB** of VRAM. The watchdog now asks for a real one-token completion instead of `/health`.
+      - d: 2026-10-05
+        t: Moved the speech-to-speech eval gates to free-run. Teacher forcing had been inflating results about **3.5x** — the real WER floor was **0.14**, not **0.78**.
+      - d: 2026-10-02
+        t: Found a never-trained embedding table in the Hindi stack. Weeks of flat loss, explained in one line.
+
+  - name: Build
+    items:
+      - d: speech
+        t: TTS time to first byte **7 s → 300 ms** with vLLM streaming and CUDA graphs, at **205 tok/s** — about 2.5x real time. Mauritian Creole first audio **5.15 s → 0.45 s**.
+      - d: speech-to-speech
+        t: A Hindi model that goes audio in to audio out, Moshi-style, first audio at **64 ms**. Aligned **11.8k** real calls into ~46k pairs; pretraining on **2,542 h**.
+      - d: voice cloning
+        t: Marathi voice clone in production — LoRA took speaker similarity from **0.72** to **0.90**. Zero-training Hindi TTS at CER **0.083** against a 0.200 pass floor.
+      - d: serving
+        t: A 12B model on half a GPU. A pre-flight VRAM calculator matches vLLM's allocator within **2%**, so a bad config fails in a second instead of after a three-minute load.
+      - d: alerting
+        t: A **30-second** watchdog that asks the model for a real completion, with events batched into one Teams card and a root-cause line pulled from the engine log.
+      - d: data
+        t: On-prem PostgreSQL migration — **40%** lower infra cost, **90%** faster API responses. Kafka to GCS to BigQuery with Spark, **10M+** records a day, sub-second, zero loss.
+
+  - name: Now
+    items:
+      - d: current
+        t: Building the audio-in call-flow engine. Scaling Hindi speech-to-speech pretraining and tightening how it's evaluated. Keeping the LLM servers boring. Learning Swedish.
